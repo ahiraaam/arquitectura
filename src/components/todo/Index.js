@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 
 const Index = ({ todos, markAsDone, deleteTask }) => {
-  const handleMarkAsDone = (event, index) => {
-    markAsDone(index);
+  const handleMarkAsDone = (event, index, id) => {
+    event.preventDefault();
+    markAsDone(index, id);
   };
-  const handleDelete = (event, index) => {
-    deleteTask(index);
+  const handleDelete = (event, index, id) => {
+    deleteTask(index, id);
   };
 
   return (
@@ -30,13 +31,13 @@ const Index = ({ todos, markAsDone, deleteTask }) => {
                   <input
                     type="button"
                     value="terminado?"
-                    onClick={(event) => handleMarkAsDone(event, i)}
+                    onClick={(event) => handleMarkAsDone(event, i, todo.id)}
                   />
                 )}
                 <input
                   type="button"
                   value="eliminar"
-                  onClick={(event) => handleDelete(event, i)}
+                  onClick={(event) => handleDelete(event, i, todo.id)}
                 />
               </td>
             </tr>

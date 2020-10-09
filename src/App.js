@@ -1,31 +1,76 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Create from "./components/todo/Create";
 import Index from "./components/todo/Index";
+import axios from "axios";
 
 function App() {
-  const [todos, setTodos] = useState([
-    { description: "Create main folder", status: "pending" },
-    { description: "Move to main folder", status: "pending" },
-    { description: "Start npm in the folder", status: "pending" },
-  ]);
+  const [todos, setTodos] = useState([]);
 
-  const addTodo = (description) => {
+  useEffect(() => {
+    fetchTodos();
+    console.log("FETCH");
+  }, []);
+
+  const fetchTodos = async () => {
+    const result = await axios("http://localhost:8000/").then((res) => {
+      console.log(res.data);
+      setTodos(res.data);
+    });
+    //setTodos(result.data);
+  };
+
+  const addTodo = async (description) => {
     let cTodos = Object.assign([], todos);
-    cTodos.push({ description: description, status: "pending" });
+    console.log(cTodos);
+
+    await axios
+      .post("http://localhost:8000/", {
+        description: description,
+        status: "pending",
+      })
+      .then((res) => {
+        console.log(res.data.id[0]);
+        cTodos.push({
+          id: res.data.id[0],
+          description: description,
+          status: "pending",
+        });
+        console.log(cTodos);
+      });
     setTodos(cTodos);
   };
-  const markAsDone = (task) => {
+
+  const markAsDone = async (i, idTask) => {
     let cTodos = Object.assign([], todos);
-    cTodos[task].status = "done";
-    setTodos(cTodos);
+    await axios
+      .post("http://localhost:8000/changeStatus", {
+        id: idTask,
+      })
+      .then((res) => {
+        console.log(res);
+        cTodos[i].status = "done";
+        setTodos(cTodos);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
-  const deleteTask = (task) => {
+  const deleteTask = async (i, idTask) => {
     let cTodos = Object.assign([], todos);
-    cTodos.splice(task, 1);
-    setTodos(cTodos);
+    console.log(idTask);
+    cTodos.splice(i, 1);
+    await axios
+      .post("http://localhost:8000/deleteTask", {
+        id: idTask,
+      })
+      .then((res) => {
+        console.log(res);
+        setTodos(cTodos);
+      });
   };
+
   return (
     <>
       <h1>Todo list</h1>
