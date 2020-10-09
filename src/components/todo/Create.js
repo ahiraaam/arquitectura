@@ -16,7 +16,7 @@ const Create = ({ addTodo }) => {
   };
   return (
     <Form>
-      <Form.Group controlId="formCreate">
+      <Form.Group>
         <Form.Label>Task</Form.Label>
         <Form.Control
           type="text"

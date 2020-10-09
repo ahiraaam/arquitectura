@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const ToDo = ({ todo, i, markAsDone, deleteTask }) => {
   const handleMarkAsDone = (event, index, id) => {
@@ -13,16 +14,17 @@ const ToDo = ({ todo, i, markAsDone, deleteTask }) => {
     <tr
       key={i}
       style={{
-        backgroundColor: todo.status == "pending" ? "white" : "#b6b6b6",
+        backgroundColor: todo.status === "pending" ? "white" : "#b6b6b6",
       }}
     >
       <td>#{i + 1}</td>
-      <td>{todo.description}</td>
       <td>
-        {todo.status == "pending" && (
+        {todo.description}
+        {todo.status === "pending" && (
           <Button
             variant="success"
             onClick={(event) => handleMarkAsDone(event, i, todo.id)}
+            style={{ marginLeft: 1 + "vw" }}
           >
             Terminado
           </Button>
@@ -30,10 +32,14 @@ const ToDo = ({ todo, i, markAsDone, deleteTask }) => {
         <Button
           value="Eliminar"
           variant="danger"
+          style={{ marginLeft: 1 + "vw" }}
           onClick={(event) => handleDelete(event, i, todo.id)}
         >
           Eliminar
         </Button>
+        <Link to={`/${todo.id}`}>
+          <Button style={{ marginLeft: 1 + "vw" }}>Ver Detalle</Button>
+        </Link>
       </td>
     </tr>
   );

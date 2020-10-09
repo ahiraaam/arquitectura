@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./styles.css";
 import ToDo from "./Todo";
 import axios from "axios";
@@ -37,8 +37,10 @@ const ToDoList = ({ todos, setTodos }) => {
   return (
     <Table striped bordered hover>
       <thead>
-        <th>#</th>
-        <th>Task</th>
+        <tr>
+          <th>#</th>
+          <th>Task</th>
+        </tr>
       </thead>
       <tbody>
         {todos.map((todo, i) => {

@@ -6,6 +6,19 @@ exports.index = async (req, res) => {
   });
 };
 
+exports.getTask = async (req, res) => {
+  let id = req.params.id;
+  console.log(id);
+  await Task.find(id)
+    .then((task) => {
+      console.log(task);
+      res.json(task);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 exports.store = async (req, res) => {
   let task = {};
   task.description = req.body.description;
