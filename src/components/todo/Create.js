@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Form } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
 
 const Create = ({ addTodo }) => {
   const [todo, setTodo] = useState("");
@@ -13,16 +15,22 @@ const Create = ({ addTodo }) => {
     setTodo("");
   };
   return (
-    <div>
-      <label htmlFor="create-form"></label>
-      <input
-        type="text"
-        value={todo}
-        id="create-form"
-        onChange={handleTodoChange}
-      />
-      <input type="button" value="Create" onClick={handleCreateClick} />
-    </div>
+    <Form>
+      <Form.Group controlId="formCreate">
+        <Form.Label>Task</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Enter task"
+          value={todo}
+          id="create-form"
+          onChange={handleTodoChange}
+        />
+      </Form.Group>
+
+      <Button variant="primary" onClick={handleCreateClick}>
+        Add Todo
+      </Button>
+    </Form>
   );
 };
 

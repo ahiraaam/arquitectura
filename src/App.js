@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Create from "./components/todo/Create";
-import Index from "./components/todo/Index";
+import ToDoList from "./components/todo/ToDoList";
 import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -14,7 +15,7 @@ function App() {
   }, []);
 
   const fetchTodos = async () => {
-    const result = await axios("http://localhost:8000/").then((res) => {
+    await axios("http://localhost:8000/").then((res) => {
       console.log(res.data);
       setTodos(res.data);
     });
@@ -42,44 +43,12 @@ function App() {
     setTodos(cTodos);
   };
 
-  const markAsDone = async (i, idTask) => {
-    let cTodos = Object.assign([], todos);
-    await axios
-      .post("http://localhost:8000/changeStatus", {
-        id: idTask,
-      })
-      .then((res) => {
-        console.log(res);
-        cTodos[i].status = "done";
-        setTodos(cTodos);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  const deleteTask = async (i, idTask) => {
-    let cTodos = Object.assign([], todos);
-    console.log(idTask);
-    cTodos.splice(i, 1);
-    await axios
-      .post("http://localhost:8000/deleteTask", {
-        id: idTask,
-      })
-      .then((res) => {
-        console.log(res);
-        setTodos(cTodos);
-      });
-  };
-
   return (
     <>
       <h1>Todo list</h1>
       <Create addTodo={addTodo}></Create>
-      <Index
-        todos={todos}
-        markAsDone={markAsDone}
-        deleteTask={deleteTask}
-      ></Index>
+      <br></br>
+      <ToDoList todos={todos} setTodos={setTodos}></ToDoList>
     </>
   );
 }
