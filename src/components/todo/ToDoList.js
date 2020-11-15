@@ -8,7 +8,7 @@ const ToDoList = ({ todos, setTodos }) => {
   const markAsDone = async (i, idTask) => {
     let cTodos = Object.assign([], todos);
     await axios
-      .post("http://localhost:8000/changeStatus", {
+      .post("api/changeStatus", {
         id: idTask,
       })
       .then((res) => {
@@ -25,7 +25,7 @@ const ToDoList = ({ todos, setTodos }) => {
     console.log(idTask);
     cTodos.splice(i, 1);
     await axios
-      .post("http://localhost:8000/deleteTask", {
+      .post("api/deleteTask", {
         id: idTask,
       })
       .then((res) => {
