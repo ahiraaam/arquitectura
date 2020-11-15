@@ -33,7 +33,7 @@ app.use(
 );
 
 // Routes
-app.use("/", webRoutes);
+app.use("/api", webRoutes);
 
 // App init
 app.listen(appConfig.expressPort, () => {

@@ -12,7 +12,7 @@ const TodoDetail = () => {
   }, []);
 
   const getTodo = async () => {
-    await axios(`http://localhost:8000/${id}`).then((result) => {
+    await axios(`/api/${id}`).then((result) => {
       console.log(result.data);
       setTodo(result.data);
     });
