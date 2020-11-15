@@ -14,7 +14,7 @@ function Home() {
   }, []);
 
   const fetchTodos = async () => {
-    await axios("api/").then((res) => {
+    await axios("http://localhost:8000/").then((res) => {
       console.log(res.data);
       setTodos(res.data);
     });
@@ -26,7 +26,7 @@ function Home() {
     console.log(cTodos);
 
     await axios
-      .post("api/", {
+      .post("http://localhost:8000/", {
         description: description,
         status: "pending",
       })
